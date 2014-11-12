@@ -9,8 +9,7 @@ package object props {
     * Implement it and test against the specification.
     * Is the specification correct?
     */
-  def gcd(a: Int, b: Int): Int = ???
-
+  def gcd(a: Int, b: Int): Int = if (b==0) a else gcd(b, a%b)
 
   /**
    * Adds a tenth of the number to itself.
