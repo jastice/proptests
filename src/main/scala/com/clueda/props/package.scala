@@ -21,7 +21,7 @@ package object props {
     * Write some properties to test your assumptions.
     * see also: http://en.wikipedia.org/wiki/Sigmoid_function
     */
-  def logistic(t: Double): Double = 1 / (1 + Math.exp(t))
+  def logistic(t: Double): Double = 1 / (1 + Math.exp(-t))
 
   /**
    * Union set of two sets.
