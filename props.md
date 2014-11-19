@@ -31,7 +31,7 @@ in your test file:
     import org.scalatest.prop.GeneratorDrivenPropertyChecks
     import org.scalacheck._
 
-    class MySpec extends PropSpec with GeneratorDrivenPropertyChecks {
+    class ExampleSpec extends PropSpec with GeneratorDrivenPropertyChecks {
 
         property("a number is equal to itself") {
           forAll { (a:Int) =>
@@ -40,6 +40,8 @@ in your test file:
         }
 
     }
+
+You can use any ScalaTest testing style, or use ScalaCheck standalone (with a different syntax)
 
 # What will ScalaTest do for you?
 
@@ -51,16 +53,57 @@ in your test file:
 
 ## Examples
 
-* plain math: GCD
-* continuous functions
-    - logistic curve
-* commutative/associative operations: set ops / list ops
-    - set unions/intersections: commutative
-    - list appending: associative
-    - neutral elements
-* recursive data structures: linked list
-* stack programming: summing identical elements
-* merging maps
+### A supposedly well-behaved simple function: GCD
+
+We know or can guess some basic mathematical properties about GCD:
+
+* associativity
+* commutativity
+* neutral element
+
+This is also known as commutative monoid, and knowing this has some very practical and useful implications
+for parallelization.
+
+* Our tests should prove it really works.
+* Does it?
+* Where does it fail?
+
+It looks like we will have to limit our assumptions. Doing this in the tests also is a form of
+executable documentation.
+
+We can also test some more specific properties:
+
+### A continuous function on reals: Logistic curve
+
+A one-argument function on Double.
+
+Looking at the graph, it seems the following holds:
+
+* strictly monotonic increasing
+* all values are > -1 and < 1
+* dot-symmetry around 0
+
+Again, our data type does not quite fit the assumptions from pure math,
+calculations with very large or small numbers yield slightly unexpected results:
+
+* strict monotonicity is violated
+* infinity-bounds are reached with regular numbers
+
+### A weirdly behaved object with side effecty method
+
+Side effects in general are harder to test, but we can still check some assumptions.
+
+
+### Set operations
+
+Set union has some very similar properties to, say, gcd.
+
+* associativity
+* commutativity
+* neutral element
+
+It also has another nice property: idempotence. This turns out to be useful for distributed systems,
+and again, parallelization.
 
 
 ## Generators
@@ -68,15 +111,40 @@ in your test file:
 * ScalaCheck contains various generators for standard data structures
 * But user-defined data needs to be generated
 
-Simple example: Rock Paper Scissors
+### Rock Paper Scissors
+
+Let's define our own datatype:
 
     sealed trait RockPaperScissors
     case object Rock extends RockPaperScissors
     case object Paper extends RockPaperScissors
     case object Scissors extends RockPaperScissors
 
+This doesn't have any prebuilt generators, of course, but we can easily make our own:
+
     implicit val genRPS: Arbitrary[RockPaperScissors] = Arbitrary(Gen.oneOf(Rock,Paper,Scissors))
 
+What properties does the `rockPaperScissors` function have?
+
+* commutative?
+* associative?
+* neutral element?
+* idempotency?
+* anything else?
+
+
+### List operations
+
+Set and list operations have many interesting properties that you can check in terms of each other.
+
+* concatenation of lists relates to their size
+* concatenation is another monoid
+* reverse retains size
+* reversing a palindrome yields itself
+* appending a reverse to itself creates a palindrome
+* ...
+
+For such home-grown recursive parameterized data structures, we need a more complex generator
 More complex example: Recursive parameterized data structures, such as a linked list ...
 
       implicit def arbConsList[T](implicit a: Arbitrary[T]): Arbitrary[ConsList[T]] = {
@@ -96,6 +164,14 @@ More complex example: Recursive parameterized data structures, such as a linked 
 Don't worry, you don't need to do this yourself for regular collections!
 
 
+## Caveat emptor!
+
+* ScalaCheck will not necessarily generate all edge case values (currently no NaN, Infinity, etc)
+* it's still probabilistic: sometimes a rare error will only occur on one run, but not the other
+    -> make specific test cases when you find such an error
+* property checks are checks, not proofs.
+    -> They test your implementation for properties that you can reasonably infer.
+
 ## Some examples to think about
 
 * average of 2 numbers
@@ -108,8 +184,7 @@ Don't worry, you don't need to do this yourself for regular collections!
 * Collatz conjecture
 
 
-
 ## References
 
 * http://scalacheck.org/
-* http://www.scalatest.org/user_guide/property_based_testing
+* http://www.scalatest.org/user_guide/property_based_testing    
