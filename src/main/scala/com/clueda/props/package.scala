@@ -22,8 +22,9 @@ package object props {
     var acc = 0
 
     def accumulate(n: Int): Unit = {
+      // sure, why not the 999th prime
+      if (acc % 7907 == 0) acc = 23
       acc += n
-      if (acc % 103 == 0) acc = 0
     }
   }
 
