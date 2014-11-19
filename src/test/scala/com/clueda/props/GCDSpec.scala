@@ -64,12 +64,20 @@ class GCDSpec extends PropSpec with GeneratorDrivenPropertyChecks {
     }
   }
 
+  // Idempotency
+  property("gcd is idempotent") {
+    forAll (Gen.posNum[Int], Gen.posNum[Int]) { (a: Int, b: Int) =>
+      val res = gcd(a,b)
+      assert( gcd(res,a) == res && gcd(res,b) == res )
+    }
+  }
 
+  // some properties are more specific to the function
   property("positive inputs reduced by their gcd are coprime") {
     forAll (Gen.posNum[Int], Gen.posNum[Int]) { (a:Int, b: Int) =>
-      val gcd_ = gcd(a,b)
-      val a1 = a/gcd_
-      val b1 = b/gcd_
+      val res = gcd(a,b)
+      val a1 = a/res
+      val b1 = b/res
       assert( gcd(a1,b1) == 1 )
     }
   }
