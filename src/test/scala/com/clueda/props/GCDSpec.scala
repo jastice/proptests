@@ -16,13 +16,13 @@ class GCDSpec extends PropSpec with GeneratorDrivenPropertyChecks {
 
   property("gcd(a,b) <= a and b for positive Ints") {
     forAll (Gen.posNum[Int], Gen.posNum[Int]) { (a:Int, b: Int) =>
-      assert( gcd(a,b) <= a.min(b) )
+      ???
     }
   }
 
   property("gcd is >= 1 for positive Ints") {
     forAll (Gen.posNum[Int], Gen.posNum[Int]) { (a:Int, b:Int) =>
-      assert( gcd(a,b) >= 1 )
+      ???
     }
   }
 
@@ -32,7 +32,7 @@ class GCDSpec extends PropSpec with GeneratorDrivenPropertyChecks {
   // Closure
   // For all a, b in A, the result of the operation a • b is also in A.
   // --> is guaranteed by the type gcd(Int,Int): Int
-  // types are constructive proofs!
+  // types are proofs!
 
 
   // Associativity
@@ -41,7 +41,7 @@ class GCDSpec extends PropSpec with GeneratorDrivenPropertyChecks {
   // without much hassle
   property("gcd on positive Ints satisfies associativity") {
     forAll (Gen.posNum[Int], Gen.posNum[Int], Gen.posNum[Int]) { (a: Int, b: Int, c: Int) =>
-      assert(gcd(gcd(a,b),c) == gcd(a,gcd(b,c)))
+      ???
     }
   }
 
@@ -51,7 +51,7 @@ class GCDSpec extends PropSpec with GeneratorDrivenPropertyChecks {
   // this property means you can parallelize this operation even more generally
   property("gcd on positive Ints satisfies commutativity") {
     forAll (Gen.posNum[Int], Gen.posNum[Int]) { (a: Int, b: Int) =>
-      assert( gcd(a,b) == gcd(b,a) )
+      ???
     }
   }
 
@@ -60,25 +60,21 @@ class GCDSpec extends PropSpec with GeneratorDrivenPropertyChecks {
   // a neutral element makes it easy to fold
   property("gcd on all Ints should have neutral element 0") {
     forAll { (a:Int) =>
-      assert( gcd(a,0) == a && a == gcd(0,a))
+      ???
     }
   }
 
   // Idempotency
   property("gcd is idempotent") {
     forAll (Gen.posNum[Int], Gen.posNum[Int]) { (a: Int, b: Int) =>
-      val res = gcd(a,b)
-      assert( gcd(res,a) == res && gcd(res,b) == res )
+      ???
     }
   }
 
   // some properties are more specific to the function
   property("positive inputs reduced by their gcd are coprime") {
     forAll (Gen.posNum[Int], Gen.posNum[Int]) { (a:Int, b: Int) =>
-      val res = gcd(a,b)
-      val a1 = a/res
-      val b1 = b/res
-      assert( gcd(a1,b1) == 1 )
+      ???
     }
   }
 

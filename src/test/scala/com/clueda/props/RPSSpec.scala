@@ -11,18 +11,12 @@ import org.scalacheck.Gen
  */
 class RPSSpec extends PropSpec with GeneratorDrivenPropertyChecks {
 
+  /** Generator for our Rock Paper Scissors data structure. */
   implicit val genRPS: Arbitrary[RockPaperScissors] = Arbitrary(Gen.oneOf(Rock,Paper,Scissors))
 
-  property("RPS is commutative") {
-    forAll { (rps1: RockPaperScissors, rps2: RockPaperScissors) =>
-      assert( rockPaperScissors(rps1,rps2) == rockPaperScissors(rps2,rps1) )
-    }
-  }
-
-  property("RPS is associative?") {
-    // woops, this will fail
-    forAll { (rps1: RockPaperScissors, rps2: RockPaperScissors, rps3: RockPaperScissors) =>
-      assert( rockPaperScissors(rockPaperScissors(rps1, rps2), rps3) == rockPaperScissors(rps1, rockPaperScissors(rps2,rps3)))
+  property("???") {
+    forAll { rps: RockPaperScissors =>
+      ???
     }
   }
 

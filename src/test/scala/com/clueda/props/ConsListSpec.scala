@@ -12,6 +12,9 @@ import org.scalacheck.Gen
 class ConsListSpec extends PropSpec with GeneratorDrivenPropertyChecks {
 
 
+  /** Generator for `ConsList` objects. For most standard data structures, you don't need to define one.
+    * For your own, you probably have to. Non-recursive structures are much easier!
+    * */
   implicit def arbConsList[T](implicit a: Arbitrary[T]): Arbitrary[ConsList[T]] = {
 
     val genEmpty = Gen.const(Empty)
@@ -33,77 +36,6 @@ class ConsListSpec extends PropSpec with GeneratorDrivenPropertyChecks {
     }
   }
 
-  property("size of appended lists is combined size of lists") {
-
-    // we need to know this is true for induction
-    assert(size(Empty) == 0)
-
-    forAll { (a: ConsList[String], b: ConsList[String]) =>
-      assert( size(append(a,b)) == size(a) + size(b) )
-    }
-  }
-
-  property("append is associative") {
-    forAll { (a: ConsList[String], b: ConsList[String], c: ConsList[String]) =>
-      assert( append(a, append(b,c)) == append(append(a,b),c) )
-    }
-  }
-
-  property("append has neutral element: Empty") {
-    forAll { (list: ConsList[String]) =>
-      // append isn't commutative, so we need to check both ways
-      assert( append(Empty,list) == list && append(list,Empty) == list )
-    }
-  }
-
-  property("appended result starts with first argument") {
-    forAll { (a: ConsList[String], b: ConsList[String]) =>
-      assert( startsWith(append(a,b), a) )
-    }
-  }
-
-  property("size(append(a,b)) is commutative") {
-    forAll { (a: ConsList[String], b: ConsList[String]) =>
-      assert( size(append(a,b)) == size(append(b,a)) )
-    }
-  }
-
-  property("every list starts with empty") {
-    forAll { (a: ConsList[String]) =>
-      assert( startsWith(a, Empty) )
-    }
-  }
-
-  property("reverse retains size") {
-    forAll { (a: ConsList[Int]) =>
-      assert( size(reverse(a)) == size(a) )
-    }
-  }
-
-  property("reversed reverse list is original") {
-    forAll { (a: ConsList[Int]) =>
-      assert( reverse(reverse(a)) == a )
-    }
-  }
-
-  property("append list to its reverse is palindromic") {
-    forAll { (a: ConsList[Int]) =>
-      assert( append(a, reverse(a)) == reverse(append(a, reverse(a))) )
-    }
-  }
-
-  property("sumRepeated contains no repeated elements") {
-
-    def containsRep(list: ConsList[Int]): Boolean =
-      list match {
-        case Empty => false
-        case Cons(h1, Cons(h2, tail)) if h1 == h2 => true
-        case Cons(h,t) => containsRep(t)
-      }
-
-    forAll { (a: ConsList[Int]) =>
-      assert( !containsRep(sumRepeated(a)) )
-    }
-  }
+  // many more interesting properties!
 
 }
