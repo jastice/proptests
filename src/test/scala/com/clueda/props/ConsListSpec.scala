@@ -29,12 +29,12 @@ class ConsListSpec extends PropSpec with GeneratorDrivenPropertyChecks {
     Arbitrary(genConsList)
   }
 
-  property("size is non-negative") {
+  // property("size is non-negative") {
 
-    forAll { list: ConsList[Int] =>
-      assert( size(list) >= 0 )
-    }
-  }
+  //   forAll { list: ConsList[Int] =>
+  //     assert( size(list) >= 0 )
+  //   }
+  // }
 
   // many more interesting properties!
 

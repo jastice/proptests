@@ -14,10 +14,10 @@ class RPSSpec extends PropSpec with GeneratorDrivenPropertyChecks {
   /** Generator for our Rock Paper Scissors data structure. */
   implicit val genRPS: Arbitrary[RockPaperScissors] = Arbitrary(Gen.oneOf(Rock,Paper,Scissors))
 
-  property("???") {
-    forAll { rps: RockPaperScissors =>
-      ???
-    }
-  }
+  // property("???") {
+  //   forAll { rps: RockPaperScissors =>
+  //     ???
+  //   }
+  // }
 
 }

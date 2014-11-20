@@ -8,13 +8,13 @@ import org.scalatest.prop.GeneratorDrivenPropertyChecks
  */
 class WeirdlyBehavedObjectSpec extends PropSpec with GeneratorDrivenPropertyChecks {
 
-  property("Weirdly Behaved Object accumulates numbers (hopefully!)") {
-    forAll { (n: Int) =>
-      val before = WeirdlyBehavedObject.acc
-      WeirdlyBehavedObject.accumulate(n)
-      val after = WeirdlyBehavedObject.acc
+  // property("Weirdly Behaved Object accumulates numbers (hopefully!)") {
+  //   forAll { (n: Int) =>
+  //     val before = WeirdlyBehavedObject.acc
+  //     WeirdlyBehavedObject.accumulate(n)
+  //     val after = WeirdlyBehavedObject.acc
 
-      assert( after == before+n)
-    }
-  }
+  //     assert( after == before+n)
+  //   }
+  // }
 }

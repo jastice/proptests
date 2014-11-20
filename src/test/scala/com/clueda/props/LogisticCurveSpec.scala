@@ -8,9 +8,9 @@ import org.scalacheck.Arbitrary.arbitrary
 
 class LogisticCurveSpec extends PropSpec with GeneratorDrivenPropertyChecks {
 
-  property("your favorite property") {
-    forAll { (t:Double) =>
-      ???
-    }
-  }
+  // property("a really good property") {
+  //   forAll { (t:Double) =>
+  //     ???
+  //   }
+  // }
 }

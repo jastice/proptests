@@ -5,9 +5,10 @@ import org.scalatest.prop.GeneratorDrivenPropertyChecks
 
 class UnionSpec extends PropSpec with GeneratorDrivenPropertyChecks {
 
-  property("set union is ...") {
-    forAll { (a: Set[String]) =>
-    }
-  }
+  // property("set union is ...") {
+  //   forAll { (a: Set[String]) =>
+  //     ???
+  //   }
+  // }
 
 }
