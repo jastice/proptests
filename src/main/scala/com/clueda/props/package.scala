@@ -7,7 +7,7 @@ package object props {
 
   /** Greatest common divisor function.
     * Implement it and test against the specification.
-    * Is the specification correct?
+    * Is the implementation correct? Is the specification?
     */
   def gcd(a: Int, b: Int): Int = ???
 
