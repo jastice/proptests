@@ -60,18 +60,25 @@ We know or can guess some basic mathematical properties about GCD:
 * associativity
 * commutativity
 * neutral element
+* idempotency
 
-This is also known as commutative monoid, and knowing this has some very practical and useful implications
-for parallelization.
+This is also known as commutative monoid (plus extras), and knowing this about your function has some very practical
+and useful implications for parallelization.
 
 * Our tests should prove it really works.
 * Does it?
 * Where does it fail?
 
-It looks like we will have to limit our assumptions. Doing this in the tests also is a form of
-executable documentation.
+It looks like we will have to revisit the algorithm or limit our assumptions. Doing this in the tests also is a form of
+_executable documentation_. Even better: Find or define a more specific type. Some libraries, such as spire-math offer
+a variety of number types.
 
 We can also test some more specific properties:
+
+* `gcd(a,b)` is always positive
+* `gcd(a,b)` is always less or equal to `a` and `b`
+* co-primeness of reduced input
+
 
 ### A continuous function on reals: Logistic curve
 
@@ -187,4 +194,4 @@ Don't worry, you don't need to do this yourself for regular collections!
 ## References
 
 * http://scalacheck.org/
-* http://www.scalatest.org/user_guide/property_based_testing    
+* http://www.scalatest.org/user_guide/property_based_testing
