@@ -96,6 +96,16 @@ calculations with very large or small numbers yield slightly unexpected results:
 * strict monotonicity is violated
 * infinity-bounds are reached with regular numbers
 
+Binary operations on floating point numbers are even more problematic:
+
+* since results are imprecise
+* addition and multiplication are not properly associative
+* equality is not exact
+* operations are not always reversible
+* in general, a lot of nice math properties are sacrificed for performance and flexibility
+
+Adjust your types and tests!
+
 ### A weirdly behaved object with side effecty method
 
 Side effects in general are harder to test, but we can still check some assumptions.
