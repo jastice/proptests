@@ -14,17 +14,6 @@ import org.scalacheck._
 
 class GCDSpec extends PropSpec with GeneratorDrivenPropertyChecks {
 
-  property("gcd(a,b) <= a and b for positive Ints") {
-    forAll (Gen.posNum[Int], Gen.posNum[Int]) { (a:Int, b: Int) =>
-      assert( gcd(a,b) <= a.min(b) )
-    }
-  }
-
-  property("gcd is >= 1 for positive Ints") {
-    forAll (Gen.posNum[Int], Gen.posNum[Int]) { (a:Int, b:Int) =>
-      assert( gcd(a,b) >= 1 )
-    }
-  }
 
   // gcd(Int,Int): Int seems to form a (commutative) Monoid:
   // http://en.wikipedia.org/wiki/Monoid
@@ -66,9 +55,20 @@ class GCDSpec extends PropSpec with GeneratorDrivenPropertyChecks {
 
   // Idempotency
   property("gcd is idempotent") {
-    forAll (Gen.posNum[Int], Gen.posNum[Int]) { (a: Int, b: Int) =>
-      val res = gcd(a,b)
-      assert( gcd(res,a) == res && gcd(res,b) == res )
+    forAll (Gen.posNum[Int]) { (a: Int) =>
+      assert( gcd(a,a) == a )
+    }
+  }
+
+  property("gcd(a,b) <= a and b for positive Ints") {
+    forAll (Gen.posNum[Int], Gen.posNum[Int]) { (a:Int, b: Int) =>
+      assert( gcd(a,b) <= a.min(b) )
+    }
+  }
+
+  property("gcd is >= 1 for positive Ints") {
+    forAll (Gen.posNum[Int], Gen.posNum[Int]) { (a:Int, b:Int) =>
+      assert( gcd(a,b) >= 1 )
     }
   }
 
