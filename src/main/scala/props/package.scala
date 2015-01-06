@@ -1,7 +1,5 @@
-package com.clueda
-
 /**
- * Various functions we will test
+ * Various functions we will test.
  */
 package object props {
 

@@ -1,4 +1,4 @@
-package com.clueda.props
+package props
 
 import org.scalacheck.Gen
 import org.scalatest.PropSpec

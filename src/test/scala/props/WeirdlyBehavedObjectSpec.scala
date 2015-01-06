@@ -1,4 +1,4 @@
-package com.clueda.props
+package props
 
 import org.scalatest.PropSpec
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
@@ -14,7 +14,7 @@ class WeirdlyBehavedObjectSpec extends PropSpec with GeneratorDrivenPropertyChec
       WeirdlyBehavedObject.accumulate(n)
       val after = WeirdlyBehavedObject.acc
 
-      assert( after == before+n)
+      assert( after == before+n )
     }
   }
 }

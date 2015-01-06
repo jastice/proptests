@@ -1,13 +1,16 @@
-# Props and Fuzzes
+# Property Based Testing Introduction
 
-Demonstrates some uses for property based testing and fuzz testing.
+Demonstrates some uses and basic strategies for property based testing.
 
 ## Getting started
 
-To compile this project, you will need to configure your repositories as described here: https://confluence.clueda.com/display/BASE/Development+Tools
+To run this project, you need [sbt](http://www.scala-sbt.org/). It is configured to run some predefined tests with ScalaCheck and ScalaTest.
 
-### Test the build
+To run the property tests:
 
-    sbt eclipse test run
+    sbt test
 
-If your repositories are properly configured, sbt should download all dependencies, compile the project, generate eclipse project files, and run the tests and default main.
+
+## Gutefrage
+
+The version presented at the Gutefrage IT Drinkup is in the `gutefrage` branch.

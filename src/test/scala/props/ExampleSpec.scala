@@ -1,4 +1,4 @@
-package com.clueda.props
+package props
 
 import org.scalatest._
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
