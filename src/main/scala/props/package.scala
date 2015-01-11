@@ -39,13 +39,13 @@ package object props {
 
 
 
-
   /**
    * Union set of two sets.
    * Implement it using only add/remove operations against the predefined property tests.
    */
   def union[T](a: Set[T], b: Set[T]): Set[T] =
     a.foldLeft(b) { (acc,e) => acc + e }
+
 
   /** Datatype for game of rock/paper/scissors. */
   sealed trait RockPaperScissors

@@ -53,6 +53,33 @@ You can use any ScalaTest testing style, or use ScalaCheck standalone (with a di
 
 ## Examples
 
+All our examples are contained in the `props` package object.
+
+### A continuous function on reals: Logistic curve
+
+Function `logistic` -- a one-argument function on Double.
+
+Looking at the graph, it seems the following holds:
+
+* strictly monotonic increasing
+* all values are > -1 and < 1
+* dot-symmetry around 0
+
+As we will find out from encoding those properties in ScalaCheck, our data type does not quite fit the assumptions from pure math; calculations with very large or small numbers yield unexpected results:
+
+* strict monotonicity is violated, because `Double` is actually kind of discrete.
+* infinity-bounds (-1,1) are reached with non-infinite numbers.
+
+Binary operations on floating point numbers are even more problematic:
+
+* results are often imprecise
+* addition and multiplication are not properly associative
+* equality is not exact
+* complementary operations are not always reversible exactly (mutliplication, division)
+* in general, a lot of nice math properties are sacrificed for performance and flexibility
+
+Adjust your types and tests!
+
 ### A supposedly well-behaved simple function: GCD
 
 We know or can guess some basic mathematical properties about GCD:
@@ -62,16 +89,13 @@ We know or can guess some basic mathematical properties about GCD:
 * neutral element
 * idempotency
 
-This is also known as commutative monoid (plus extras), and knowing this about your function has some very practical
-and useful implications for parallelization.
+This is also known as commutative monoid (plus extras), and knowing this about your function has some very practical and useful implications for parallelization.
 
 * Our tests should prove it really works.
 * Does it?
 * Where does it fail?
 
-It looks like we will have to revisit the algorithm or limit our assumptions. Doing this in the tests also is a form of
-_executable documentation_. Even better: Find or define a more specific type. Some libraries, such as spire-math offer
-a variety of number types.
+It looks like we will have to revisit the algorithm or limit our assumptions. Doing this in the tests also is a form of _executable documentation_. Even better: Find or define a more specific type. Some libraries, such as spire-math offer a variety of number types.
 
 We can also test some more specific properties:
 
@@ -80,47 +104,22 @@ We can also test some more specific properties:
 * co-primeness of reduced input
 
 
-### A continuous function on reals: Logistic curve
-
-A one-argument function on Double.
-
-Looking at the graph, it seems the following holds:
-
-* strictly monotonic increasing
-* all values are > -1 and < 1
-* dot-symmetry around 0
-
-Again, our data type does not quite fit the assumptions from pure math,
-calculations with very large or small numbers yield slightly unexpected results:
-
-* strict monotonicity is violated
-* infinity-bounds are reached with regular numbers
-
-Binary operations on floating point numbers are even more problematic:
-
-* since results are imprecise
-* addition and multiplication are not properly associative
-* equality is not exact
-* operations are not always reversible
-* in general, a lot of nice math properties are sacrificed for performance and flexibility
-
-Adjust your types and tests!
-
 ### A weirdly behaved object with side effecty method
 
+See the object  `WeirdlyBehavedObject`
 Side effects in general are harder to test, but we can still check some assumptions.
 
 
 ### Set operations
 
+For example: `union`
 Set union has some very similar properties to, say, gcd.
 
 * associativity
 * commutativity
 * neutral element
 
-It also has another nice property: idempotence. This turns out to be useful for distributed systems,
-and again, parallelization.
+It also has another nice property: idempotence. This turns out to be useful for distributed systems, and again, parallelization.
 
 
 ## Generators
@@ -146,7 +145,7 @@ What properties does the `rockPaperScissors` function have?
 * commutative?
 * associative?
 * neutral element?
-* idempotency?
+* idempotent?
 * anything else?
 
 
@@ -161,8 +160,9 @@ Set and list operations have many interesting properties that you can check in t
 * appending a reverse to itself creates a palindrome
 * ...
 
-For such home-grown recursive parameterized data structures, we need a more complex generator
-More complex example: Recursive parameterized data structures, such as a linked list ...
+For such home-grown recursive parameterized data structures, we need a more complex generator.
+
+More involved example: Recursive parameterized data structures, such as a linked list ...
 
       implicit def arbConsList[T](implicit a: Arbitrary[T]): Arbitrary[ConsList[T]] = {
 
@@ -183,11 +183,9 @@ Don't worry, you don't need to do this yourself for regular collections!
 
 ## Caveat emptor!
 
-* ScalaCheck will not necessarily generate all edge case values (currently no NaN, Infinity, etc)
-* it's still probabilistic: sometimes a rare error will only occur on one run, but not the other
-    -> make specific test cases when you find such an error
-* property checks are checks, not proofs.
-    -> They test your implementation for properties that you can reasonably infer.
+* ScalaCheck will not necessarily generate all edge case values (currently no NaN, Infinity, etc) unless you specifically tell it to. Most properties just never hold for this kind of value.
+* it's still probabilistic: sometimes a rare error will only occur on one run, but not the other. Make specific test cases when you find such an error
+* property checks are checks, not proofs. They test your implementation for properties that you can reasonably infer.
 
 ## Some examples to think about
 
