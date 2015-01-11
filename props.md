@@ -41,7 +41,7 @@ in your test file:
 
     }
 
-You can use any ScalaTest testing style, or use ScalaCheck standalone (with a different syntax)
+This introduction uses ScalaCheck together with Scalatest and the `PropSpec` testing style. You can use any ScalaTest testing style, or use ScalaCheck standalone  or together with the Specs2 framework (with a different syntax).
 
 # What will ScalaTest do for you?
 
