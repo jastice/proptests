@@ -17,15 +17,6 @@ package object props {
   def gcd(a: Int, b: Int): Int = if (b==0) a else gcd(b, a%b)
 
 
-
-
-
-  /**
-   * Adds a tenth of the number to itself.
-   * Write some properties to test your assumptions.
-   */
-  def addTenth(n: Int) = n + n/10
-
   /** Black-box unit-test this! */
   object WeirdlyBehavedObject {
     var acc = 0
@@ -36,7 +27,6 @@ package object props {
       acc += n
     }
   }
-
 
 
   /**
