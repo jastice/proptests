@@ -14,7 +14,7 @@ package object props {
     * Implement it and test against the specification.
     * Is the implementation correct? Is the specification?
     */
-  def gcd(a: Int, b: Int): Int = if (b==0) a else gcd(b, a%b)
+  def gcd(a: Int, b: Int): Int = ???
 
 
   /** Black-box unit-test this! */
@@ -34,7 +34,7 @@ package object props {
    * Implement it using only add/remove operations against the predefined property tests.
    */
   def union[T](a: Set[T], b: Set[T]): Set[T] =
-    a.foldLeft(b) { (acc,e) => acc + e }
+    ???
 
 
   /** Datatype for game of rock/paper/scissors. */
@@ -69,56 +69,38 @@ package object props {
    * Calculate the size of a list.
    * Write properties and an implementation.
    */
-  def size[T](list: ConsList[T]): Int = list match {
-    case Empty => 0
-    case Cons(h,t) => 1 +  size(t)
-  }
+  def size[T](list: ConsList[T]): Int = ???
 
-  def contains[T](elem: T, list: ConsList[T]): Boolean = list match {
-    case Empty => false
-    case Cons(e,list) => elem == e && contains(elem, list)
-  }
+  /**
+   * Return whether `list` contains `elem`.
+   * Write properties and an implementation.
+   */
+  def contains[T](elem: T, list: ConsList[T]): Boolean = ???
+
+  
 
   /**
    * Test if the list `list` starts with the elements of the list `start`.
    * Write properties and an implementation.
    */
-  def startsWith[T](list: ConsList[T], start: ConsList[T]): Boolean = (list,start) match {
-    case (_,Empty) => true
-    case (Empty,_) => false
-    case (Cons(h1,t1), Cons(h2,t2)) => h1 == h2 && startsWith(t1,t2)
-  }
+  def startsWith[T](list: ConsList[T], start: ConsList[T]): Boolean = ???
 
   /**
-   * Append b to a.
+   * Append `b` to `a`.
    * Write properties and an implementation.
    */
-  def append[T](a: ConsList[T], b: ConsList[T]): ConsList[T] = a match {
-    case Empty => b
-    case Cons(h,t) => Cons(h, append(t,b))
-  }
+  def append[T](a: ConsList[T], b: ConsList[T]): ConsList[T] = ???
 
   /**
    * Reverse a list.
    * Write properties and an implementation.
    */
-  def reverse[T](list: ConsList[T]): ConsList[T] = list match {
-    case Empty => Empty
-    case Cons(h,t) => Cons(h, reverse(t))
-  }
+  def reverse[T](list: ConsList[T]): ConsList[T] = ???
 
   /**
    * Sum up the repeated numbers in a list.
    * Write properties and am implementation.
    */
-  def sumRepeated(list: ConsList[Int]): ConsList[Int] =
-    sumRepeatedAcc(Empty,Empty,0)
-
-  private def sumRepeatedAcc(list:ConsList[Int], stack: ConsList[Int], prev: Int): ConsList[Int] =
-    (list,stack) match {
-      case (Empty,_) => stack
-      case (Cons(h,t), Cons(sh,st)) if h==prev => sumRepeatedAcc(t, Cons(sh+h,st),prev)
-      case (Cons(h,t), _) => sumRepeatedAcc(t, Cons(h,stack),h)
-    }
+  def sumRepeated(list: ConsList[Int]): ConsList[Int] = ???
 
 }
