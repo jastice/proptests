@@ -11,9 +11,9 @@ import org.scalacheck.Gen
  */
 class RPSSpec extends PropSpec with GeneratorDrivenPropertyChecks {
 
-  implicit val genRPS: Arbitrary[RockPaperScissors] = Arbitrary(Gen.oneOf(Rock,Paper,Scissors))
+  implicit val domain: Arbitrary[RockPaperScissors] = Arbitrary(Gen.oneOf(Rock,Paper,Scissors))
 
-  property("RPS is commutative") {
+  property("RPS is commutative?") {
     forAll { (rps1: RockPaperScissors, rps2: RockPaperScissors) =>
       assert( rockPaperScissors(rps1,rps2) == rockPaperScissors(rps2,rps1) )
     }

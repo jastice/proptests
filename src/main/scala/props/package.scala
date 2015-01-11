@@ -3,11 +3,22 @@
  */
 package object props {
 
+  /** Just the logistic curve. What could possibly go wrong?
+    * Write some properties to test your assumptions.
+    * see also: http://en.wikipedia.org/wiki/Sigmoid_function
+    */
+  def logistic(t: Double): Double = 1 / (1 + Math.exp(-t))
+
+
   /** Greatest common divisor function.
     * Implement it and test against the specification.
     * Is the implementation correct? Is the specification?
     */
   def gcd(a: Int, b: Int): Int = if (b==0) a else gcd(b, a%b)
+
+
+
+
 
   /**
    * Adds a tenth of the number to itself.
@@ -27,11 +38,7 @@ package object props {
   }
 
 
-  /** Just the logistic curve. What could possibly go wrong?
-    * Write some properties to test your assumptions.
-    * see also: http://en.wikipedia.org/wiki/Sigmoid_function
-    */
-  def logistic(t: Double): Double = 1 / (1 + Math.exp(-t))
+
 
   /**
    * Union set of two sets.

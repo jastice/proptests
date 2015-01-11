@@ -7,6 +7,8 @@ import org.scalacheck._
 
 class GCDSpec extends PropSpec with GeneratorDrivenPropertyChecks {
 
+  // domain for which our properties hold
+  implicit val domain = Arbitrary(Gen.posNum[Int])
 
   // gcd(Int,Int): Int seems to form a (commutative) Monoid:
   // http://en.wikipedia.org/wiki/Monoid
@@ -15,6 +17,7 @@ class GCDSpec extends PropSpec with GeneratorDrivenPropertyChecks {
   // For all a, b in A, the result of the operation a • b is also in A.
   // --> is guaranteed by the type gcd(Int,Int): Int
   // types are constructive proofs!
+  // well not quite guaranteed, because null.
 
 
   // Associativity
@@ -22,8 +25,8 @@ class GCDSpec extends PropSpec with GeneratorDrivenPropertyChecks {
   // this property means you can use this op in fold and map-reduce type algorithms
   // without much hassle
   property("gcd on positive Ints satisfies associativity") {
-    forAll (Gen.posNum[Int], Gen.posNum[Int], Gen.posNum[Int]) { (a: Int, b: Int, c: Int) =>
-      assert(gcd(gcd(a,b),c) == gcd(a,gcd(b,c)))
+    forAll { (a: Int, b: Int, c: Int) =>
+      assert( gcd(gcd(a,b),c) == gcd(a,gcd(b,c)) )
     }
   }
 
@@ -32,7 +35,7 @@ class GCDSpec extends PropSpec with GeneratorDrivenPropertyChecks {
   // For all a, b in A, a • b = b • a.
   // this property means you can parallelize this operation even more generally
   property("gcd on positive Ints satisfies commutativity") {
-    forAll (Gen.posNum[Int], Gen.posNum[Int]) { (a: Int, b: Int) =>
+    forAll { (a: Int, b: Int) =>
       assert( gcd(a,b) == gcd(b,a) )
     }
   }
@@ -48,26 +51,26 @@ class GCDSpec extends PropSpec with GeneratorDrivenPropertyChecks {
 
   // Idempotency
   property("gcd is idempotent") {
-    forAll (Gen.posNum[Int]) { (a: Int) =>
+    forAll { (a: Int) =>
       assert( gcd(a,a) == a )
     }
   }
 
   property("gcd(a,b) <= a and b for positive Ints") {
-    forAll (Gen.posNum[Int], Gen.posNum[Int]) { (a:Int, b: Int) =>
+    forAll { (a:Int, b: Int) =>
       assert( gcd(a,b) <= a.min(b) )
     }
   }
 
   property("gcd is >= 1 for positive Ints") {
-    forAll (Gen.posNum[Int], Gen.posNum[Int]) { (a:Int, b:Int) =>
+    forAll { (a:Int, b:Int) =>
       assert( gcd(a,b) >= 1 )
     }
   }
 
   // some properties are more specific to the function
   property("positive inputs reduced by their gcd are coprime") {
-    forAll (Gen.posNum[Int], Gen.posNum[Int]) { (a:Int, b: Int) =>
+    forAll { (a:Int, b: Int) =>
       val res = gcd(a,b)
       val a1 = a/res
       val b1 = b/res
