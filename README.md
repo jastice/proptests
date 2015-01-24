@@ -12,4 +12,8 @@ To run the property tests:
 
 ## Gutefrage
 
-The version presented at the Gutefrage IT Drinkup is in the `gutefrage` branch.
+The version presented at the [Gutefrage IT Drinkup](www.meetup.com/Gutefrage-IT-Drinkup/events/219207968/) is in the `gutefrage` branch.
+
+## Softwerkskammer
+
+The version presented at the [27th Softwerkskammer session](http://www.meetup.com/Software-Craftsmanship-Meetup-Softwerkskammer-Munchen/events/220013081/) is in the `softwerkskammer` branch.
