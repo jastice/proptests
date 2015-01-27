@@ -8,7 +8,42 @@ import org.scalacheck._
 class GCDSpec extends PropSpec with GeneratorDrivenPropertyChecks {
 
   // domain for which our properties hold
-  // implicit val domain = Arbitrary(Gen.posNum[Int])
+  implicit val domain = Arbitrary(Gen.posNum[Int])
+
+  property("smaller a and b") {
+    forAll { (a:Int,b:Int) =>
+      val g = gcd(a,b)
+      assert( g <= a && g <= b )
+    }
+  }
+
+  property("commutativity") {
+    forAll { (a:Int,b:Int) =>
+      assert( gcd(a,b) == gcd(b,a) )
+    }
+  }
+
+  property("associativity") {
+    forAll { (a:Int,b:Int,c:Int) =>
+      assert( gcd(gcd(a,b),c) == gcd(a,gcd(b,c)) )
+    }
+  }
+
+  property("gcd is a divisor of a and b") {
+    forAll { (a:Int,b:Int) =>
+      val g = gcd(a,b)
+      assert( a % g == 0 )
+    }
+  }
+
+  property("distributivity over multiplication") {
+    forAll { (a:Int,b:Int,m:Int) =>
+      assert( gcd(a*m,b*m) == m*gcd(a,b) )
+    }
+  }
+
+
+
 
   // gcd(Int,Int): Int seems to form a (commutative) Monoid:
   // http://en.wikipedia.org/wiki/Monoid

@@ -215,6 +215,7 @@ to help you generate generators (yo dawg).
 
 ## References
 
+* https://github.com/jastice/proptests (companion repo)
 * http://scalacheck.org/
 * http://www.scalatest.org/user_guide/property_based_testing
 * https://github.com/alexarchambault/scalacheck-shapeless

@@ -7,7 +7,7 @@ import org.scalacheck._
 class ExampleSpec extends PropSpec with GeneratorDrivenPropertyChecks {
 
   property("an integer is equal to itself") {
-    forAll { (a:Int) =>
+    forAll { (a:Double) =>
       assert( a == a )
     }
   }
