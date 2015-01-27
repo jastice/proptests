@@ -3,7 +3,7 @@
 ## Motivation
 
 * Unit tests only test example inputs and expected output
-    - you will miss a lot of edge cases: weird numbers (infinity, NaN), chinese characters, etc
+    - you will miss a lot of edge cases: weird numbers, chinese characters, etc
 * Unit tests are tedious
     - you won't write as many as are necessary
 
@@ -20,26 +20,32 @@ You will need to think more about what the *properties* of your functions are.
 
 in `build.sbt`:
 
-    libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "2.2.1" % "test", // testing framework
-      "org.scalacheck" %% "scalacheck" % "1.11.6" % "test", // property tests
-      )
+```scala
+libraryDependencies ++= Seq(
+  "org.scalatest" %% "scalatest" % "2.2.1" % "test", // testing framework
+  "org.scalacheck" %% "scalacheck" % "1.11.6" % "test", // property tests
+  )
+```
 
 in your test file:
 
-    import org.scalatest._
-    import org.scalatest.prop.GeneratorDrivenPropertyChecks
-    import org.scalacheck._
+```scala
+  import org.scalatest._
+  import org.scalatest.prop.GeneratorDrivenPropertyChecks
+  import org.scalacheck._
 
-    class ExampleSpec extends PropSpec with GeneratorDrivenPropertyChecks {
+  class ExampleSpec 
+  extends PropSpec 
+  with GeneratorDrivenPropertyChecks {
 
-        property("a number is equal to itself") {
-          forAll { (a:Int) =>
-            assert( a == a )
-          }
+      property("a number is equal to itself") {
+        forAll { (a:Int) =>
+          assert( a == a )
         }
+      }
 
-    }
+  }
+```
 
 This introduction uses ScalaCheck together with Scalatest and the `PropSpec` testing style. You can use any ScalaTest testing style, or use ScalaCheck standalone  or together with the Specs2 framework (with a different syntax).
 
@@ -131,14 +137,19 @@ It also has another nice property: idempotence. This turns out to be useful for 
 
 Let's define our own datatype:
 
-    sealed trait RockPaperScissors
-    case object Rock extends RockPaperScissors
-    case object Paper extends RockPaperScissors
-    case object Scissors extends RockPaperScissors
+```scala
+sealed trait RockPaperScissors
+case object Rock extends RockPaperScissors
+case object Paper extends RockPaperScissors
+case object Scissors extends RockPaperScissors
+```
 
 This doesn't have any prebuilt generators, of course, but we can easily make our own:
 
-    implicit val genRPS: Arbitrary[RockPaperScissors] = Arbitrary(Gen.oneOf(Rock,Paper,Scissors))
+```scala
+implicit val genRPS: Arbitrary[RockPaperScissors] = 
+  Arbitrary(Gen.oneOf(Rock,Paper,Scissors))
+```
 
 What properties does the `rockPaperScissors` function have?
 
@@ -164,22 +175,25 @@ For such home-grown recursive parameterized data structures, we need a more comp
 
 More involved example: Recursive parameterized data structures, such as a linked list ...
 
-      implicit def arbConsList[T](implicit a: Arbitrary[T]): Arbitrary[ConsList[T]] = {
+```scala
+implicit def arbConsList[T](implicit a: Arbitrary[T]): Arbitrary[ConsList[T]] = {
 
-        val genEmpty = Gen.const(Empty)
-        def genCons: Gen[ConsList[T]] =
-          for {
-            h <- Arbitrary.arbitrary[T](a)
-            t <- genConsList
-          } yield Cons(h,t)
+  val genEmpty = Gen.const(Empty)
+  def genCons: Gen[ConsList[T]] =
+    for {
+      h <- Arbitrary.arbitrary[T](a)
+      t <- genConsList
+    } yield Cons(h,t)
 
-        def genConsList = Gen.frequency((1,genEmpty), (5,genCons))
+  def genConsList = Gen.frequency((1,genEmpty), (5,genCons))
 
-        Arbitrary(genConsList)
-      }
+  Arbitrary(genConsList)
+}
+```
 
 Don't worry, you don't need to do this yourself for regular collections!
-
+There are also [tools](https://github.com/alexarchambault/scalacheck-shapeless)
+to help you generate generators (yo dawg).
 
 ## Caveat emptor!
 
@@ -203,3 +217,4 @@ Don't worry, you don't need to do this yourself for regular collections!
 
 * http://scalacheck.org/
 * http://www.scalatest.org/user_guide/property_based_testing
+* https://github.com/alexarchambault/scalacheck-shapeless
