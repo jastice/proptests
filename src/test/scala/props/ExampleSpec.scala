@@ -12,4 +12,10 @@ class ExampleSpec extends PropSpec with GeneratorDrivenPropertyChecks {
     }
   }
 
+  // property("adding 1 to a double increases it") {
+  //   forAll { (a:Double) =>
+  //     assert( a < a+1 )
+  //   }
+  // }  
+
 }
