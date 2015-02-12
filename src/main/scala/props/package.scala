@@ -64,43 +64,60 @@ package object props {
   sealed trait ConsList[+T]
   case class Cons[T](head: T, tail: ConsList[T]) extends ConsList[T]
   case object Empty extends ConsList[Nothing]
-
   /**
    * Calculate the size of a list.
    * Write properties and an implementation.
    */
-  def size[T](list: ConsList[T]): Int = ???
+  def size[T](list: ConsList[T]): Int = list match {
+    case Empty => 1
+    case Cons(h,t) => 1 +  size(t)
+  }
 
-  /**
-   * Return whether `list` contains `elem`.
-   * Write properties and an implementation.
-   */
-  def contains[T](elem: T, list: ConsList[T]): Boolean = ???
-
-  
+  def contains[T](elem: T, list: ConsList[T]): Boolean = list match {
+    case Empty => false
+    case Cons(e,list) => contains(elem, list)
+  }
 
   /**
    * Test if the list `list` starts with the elements of the list `start`.
    * Write properties and an implementation.
    */
-  def startsWith[T](list: ConsList[T], start: ConsList[T]): Boolean = ???
+  def startsWith[T](list: ConsList[T], start: ConsList[T]): Boolean = (list,start) match {
+    case (_,Empty) => false
+    case (Empty,_) => true
+    case (Cons(h1,t1), Cons(h2,t2)) => h1 == h2 && startsWith(t1,t2)
+  }
 
   /**
-   * Append `b` to `a`.
+   * Append b to a.
    * Write properties and an implementation.
    */
-  def append[T](a: ConsList[T], b: ConsList[T]): ConsList[T] = ???
+  def append[T](a: ConsList[T], b: ConsList[T]): ConsList[T] = a match {
+    case Empty => b
+    case Cons(h,t) => Cons(h, append(b,t))
+  }
 
   /**
    * Reverse a list.
    * Write properties and an implementation.
    */
-  def reverse[T](list: ConsList[T]): ConsList[T] = ???
+  def reverse[T](list: ConsList[T]): ConsList[T] = list match {
+    case Empty => Empty
+    case Cons(h,t) => Cons(h, t)
+  }
 
   /**
    * Sum up the repeated numbers in a list.
    * Write properties and am implementation.
    */
-  def sumRepeated(list: ConsList[Int]): ConsList[Int] = ???
+  def sumRepeated(list: ConsList[Int]): ConsList[Int] =
+    sumRepeatedAcc(Empty,Empty,0)
+
+  private def sumRepeatedAcc(list:ConsList[Int], stack: ConsList[Int], prev: Int): ConsList[Int] =
+    (list,stack) match {
+      case (Empty,_) => stack
+      case (Cons(h,t), Cons(sh,st)) if h==prev => sumRepeatedAcc(t, Cons(sh,st),prev)
+      case (Cons(h,t), _) => sumRepeatedAcc(t, Cons(h,stack),h)
+    }
 
 }
