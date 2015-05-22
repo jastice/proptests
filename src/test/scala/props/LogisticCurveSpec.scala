@@ -8,10 +8,11 @@ import org.scalacheck.Arbitrary.arbitrary
 
 class LogisticCurveSpec extends PropSpec with GeneratorDrivenPropertyChecks {
 
+
   property("logistic curve values are in range [-1,1]") {
     forAll { (t:Double) =>
       val x = logistic(t)
-      assert( x > -1 && x < 1 )
+      assert( x >= -1 && x <= 1 )
     }
   }
 
@@ -20,14 +21,16 @@ class LogisticCurveSpec extends PropSpec with GeneratorDrivenPropertyChecks {
       whenever (b>0) {
         val x1 = logistic(a)
         val x2 = logistic(a+b)
-        assert( x1 < x2 )
+        assert( x1 <= x2 )
       }
     }
   }
 
   property("logistic curve is dot-symmetric") {
     forAll { (t:Double) =>
-      ???
+      val l1 = logistic(t)
+      val l2 = logistic(-t)
+      assert( l1+l2 == 1 )
     }
   }
 

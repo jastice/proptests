@@ -14,7 +14,7 @@ package object props {
     * Implement it and test against the specification.
     * Is the implementation correct? Is the specification?
     */
-  def gcd(a: Int, b: Int): Int = ???
+  def gcd(a: Int, b: Int): Int = if (b==0) a else gcd(b,a%b)
 
 
   /** Black-box unit-test this! */

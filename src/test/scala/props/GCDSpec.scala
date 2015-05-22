@@ -8,7 +8,25 @@ import org.scalacheck._
 class GCDSpec extends PropSpec with GeneratorDrivenPropertyChecks {
 
   // domain for which our properties hold
-  // implicit val domain = Arbitrary(Gen.choose(1,Int.MaxValue))
+  implicit val domain = Arbitrary(Gen.choose(1,Int.MaxValue))
+
+  property("divisors") {
+    forAll { (a:Int,b:Int) =>
+      val g = gcd(a,b)
+      assert( a % g == 0 && b % g == 0 )
+    }
+  }
+
+  property("divisors2") {
+    forAll { (a:Int,b:Int,c:Int) =>
+      val g = gcd(a,b)
+      whenever (c>g) {
+        assert (a % c != 0 || b % c != 0)
+      }
+    }
+  }
+
+
 
   // gcd(Int,Int): Int seems to form a (commutative) Monoid:
   // http://en.wikipedia.org/wiki/Monoid
@@ -24,16 +42,28 @@ class GCDSpec extends PropSpec with GeneratorDrivenPropertyChecks {
   // For all a, b and c in A, the equation (a • b) • c = a • (b • c) holds.
   // this property means you can use this op in fold and map-reduce type algorithms
   // without much hassle
-  // property("gcd on positive Ints satisfies associativity") {
-  //   ???
-  // }
+  property("gcd on positive Ints satisfies associativity") {
+    forAll { (a:Int,b:Int,c:Int) =>
+      assert( gcd(gcd(a,b),c) == gcd(a,gcd(b,c)) )
+    }
+  }
+
+
 
 
   // Commutativity
   // For all a, b in A, a • b = b • a.
   // this property means you can parallelize this operation even more generally
-  // property("gcd on positive Ints satisfies commutativity") {
-  //   ???
+  property("gcd on positive Ints satisfies commutativity") {
+    forAll { (a:Int,b:Int) =>
+      assert( gcd(a,b) == gcd(b,a) )
+    }
+  }
+
+  // property("coefficient") {
+  //   forAll {
+
+  //   }
   // }
 
   // Neutral Element
@@ -44,9 +74,11 @@ class GCDSpec extends PropSpec with GeneratorDrivenPropertyChecks {
   // }
 
   // Idempotency
-  // property("gcd is idempotent") {
-  //   ???
-  // }
+  property("gcd is idempotent") {
+    forAll { (a:Int) =>
+      assert (gcd(a,a) == a)
+    }
+  }
 
   // property("gcd(a,b) <= a and b for positive Ints") {
   //   ???
