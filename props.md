@@ -43,6 +43,10 @@ in your test file:
 
 This introduction uses ScalaCheck together with Scalatest and the `PropSpec` testing style. You can use any ScalaTest testing style, or use ScalaCheck standalone  or together with the Specs2 framework (with a different syntax).
 
+# Setup in Java
+
+See the example project: https://github.com/jastice/proptests-java
+
 # What will ScalaTest do for you?
 
 * generate various random input for many data structures
@@ -87,7 +91,7 @@ We know or can guess some basic mathematical properties about GCD:
 * associativity
 * commutativity
 * neutral element
-* idempotency
+* idempotence
 
 This is also known as commutative monoid (plus extras), and knowing this about your function has some very practical and useful implications for parallelization.
 
