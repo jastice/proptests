@@ -59,6 +59,13 @@ See the example project: https://github.com/jastice/proptests-java
 
 All our examples are contained in the `props` package object.
 
+### Encoding and Decoding
+
+Given an encoding and decoding function, a good strategy is to test whether decoding the output of the encoder is always the input.
+
+The `rot13` function "rotates" the 26 regular latin alphabet in a text letters by 13 characters. This has the nice property of being it's own inverse.
+
+
 ### A continuous function on reals: Logistic curve
 
 Function `logistic` -- a one-argument function on Double.
@@ -108,7 +115,7 @@ We can also test some more specific properties:
 * co-primeness of reduced input
 
 
-### A weirdly behaved object with side effecty method
+### A weirdly behaved object with side-effecty method
 
 See the object  `WeirdlyBehavedObject`
 Side effects in general are harder to test, but we can still check some assumptions.

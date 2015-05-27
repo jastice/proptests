@@ -3,6 +3,13 @@
  */
 package object props {
 
+  /** Advanced encryption function. */
+  def rot13(s: String): String = s map {
+    case c if 'a' <= c.toLower && c.toLower <= 'm' => c + 13 toChar
+    case c if 'n' <= c.toLower && c.toLower <= 'z' => c - 13 toChar
+    case c => c
+  }
+
   /** Just the logistic curve. What could possibly go wrong?
     * Write some properties to test your assumptions.
     * see also: http://en.wikipedia.org/wiki/Sigmoid_function
