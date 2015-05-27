@@ -17,3 +17,7 @@ The version presented at the [Gutefrage IT Drinkup](www.meetup.com/Gutefrage-IT-
 ## Softwerkskammer
 
 The version presented at the [27th Softwerkskammer session](http://www.meetup.com/Software-Craftsmanship-Meetup-Softwerkskammer-Munchen/events/220013081/) is in the `softwerkskammer` branch.
+
+## 1&1 Brown Bag Session
+
+The version presented at the 1&1 Brown Bag Session is in the branch `1und1-brownbag`.
